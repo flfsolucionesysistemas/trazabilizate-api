@@ -159,7 +159,7 @@ exports.userLogin= async(req, res)=>{
                                       ///message: "Comercio "+row[0].nombre+" "+row[0].apellido+" logeado"
 										res.status(200).send(comercio);
 										
-      							};
+      							}
       						///}else{
                                   ///res.status(200).send(usuario);
 
