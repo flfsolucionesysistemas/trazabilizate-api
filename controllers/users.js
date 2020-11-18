@@ -153,11 +153,11 @@ exports.userLogin= async(req, res)=>{
     let row = await pool.query ('SELECT * FROM comercio where usuario = ? and password = ?', [usuario, password]);
     console.log(row.length);
 		if (row.length>0){
-
-      							res.status(200).send({
+			let comercio = row[0];
+      							//res.status(200).send({
                                       ///token: jwt.createToken(usuario),
                                       ///message: "Comercio "+row[0].nombre+" "+row[0].apellido+" logeado"
-									  res.status(200).send(row[0]);
+										res.status(200).send(comercio);
       							});
       						///}else{
                                   ///res.status(200).send(usuario);
