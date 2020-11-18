@@ -156,7 +156,8 @@ exports.userLogin= async(req, res)=>{
 
       							res.status(200).send({
                                       ///token: jwt.createToken(usuario),
-                                      message: "Comercio "+row[0].nombre+" "+row[0].apellido+" logeado"
+                                      ///message: "Comercio "+row[0].nombre+" "+row[0].apellido+" logeado"
+									  res.status(200).send(row[0]);
       							});
       						///}else{
                                   ///res.status(200).send(usuario);
