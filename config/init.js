@@ -3,11 +3,11 @@ let config = {
     database:{
         host: 'localhost',
         user: 'root',
-        password:'USrrh7H6fb',
-        database:'trazabilidad'//,
+        //password:'USrrh7H6fb',
+        database:'trazabilidad',//,
 //          host: 'localhost',
 //          user: 'root',
-//          password:'pepirimini'
+          password:'pepirimini'
     },
     /*database:{
         host: 'localhost',
