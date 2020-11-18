@@ -22,6 +22,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//CONF CABECERAS HTTP, NECESARIAS PARA QUE LA API QUE ESTAMOS CONSTRUYENDO FUNCIONE A NIVEL DE AJAX
+app.use((req, res, next) => {
+	res.header('Access-Control-Allow-Origin','*');
+	res.header('Access-Control-Allow-Headers','Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept ,Access-Control-Allow-Request-Method');		
+	res.header('Access-Control-Allow-Methods','GET, POST, OPTIONS, PUT, DELETE');
+	res.header('Allow','GET, POST, OPTIONS, PUT, DELETE');
+	next();	
+})
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
