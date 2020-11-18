@@ -8,14 +8,11 @@ const PDFDocument = require('pdfkit');
 const Str = require('@supercharge/strings')
 
 
-
+//begin addPersona
 exports.addPersona= async (req, res) =>{
     let persona = req.body;
     let cadena = persona.dni+"-"+persona.num_tramite+"-"+persona.nombre+"-"+persona.apellido+"-"+persona.email;
-
-
     const qr = await qrcode.toDataURL(cadena);
-
     let   persona2 = {
           dni: persona.dni,
           apellido: persona.apellido,
@@ -26,10 +23,8 @@ exports.addPersona= async (req, res) =>{
           positivo: 0,
           qr:qr
       }
-
     console.log(persona2);
-
-
+    // insert a la base
     await pool.query('INSERT INTO persona set ?', [persona2], function(err, sql, fields){
            if(err){
                res.status(400).json({
@@ -60,11 +55,7 @@ exports.addPersona= async (req, res) =>{
                   doc.image("./public/pdf/qr-"+persona2.apellido+"-"+persona2.nombre+"-"+persona2.dni+"-"+persona2.num_tramite+".png", 320, 280, {scale: 1})
                       .text('Código QR', 320, 265);
                   doc.end();
-
-
                 });
-
-
 
                //envio de mail
                var transporter = nodemailer.createTransport({
@@ -74,7 +65,6 @@ exports.addPersona= async (req, res) =>{
                    pass: 'everLAST2020'
                  }
                });
-
                var mailOptions = {
                  from: 'Trazate',
                  to: persona.email,
@@ -97,13 +87,10 @@ exports.addPersona= async (req, res) =>{
                });
            }
     });
-
-
-
 }
+//fin addPersona
 
-
-
+//begin addComercio
 exports.addComercio= async (req, res) =>{
     let comercio = req.body;
     const random = Str.random(10)
@@ -118,7 +105,7 @@ exports.addComercio= async (req, res) =>{
           password: random
       }
 
-
+    //insert  a la base
     await pool.query('INSERT INTO comercio set ?', [comercio2], function(err, sql, fields){
            if(err){
                res.status(400).json({
@@ -153,7 +140,35 @@ exports.addComercio= async (req, res) =>{
                });
            }
     });
-
-
-
 }
+//fin addComercio
+
+//begin userLogin
+
+exports.userLogin= async(req, res)=>{
+	  var params = req.body
+	  var usuario = params.usuario;
+    var password = params.password;
+
+    let row = await pool.query ('SELECT * FROM comercio where usuario = ? and password = ?', [usuario, password]);
+    console.log(row.length);
+		if (row.length>0){
+
+      							res.status(200).send({
+                                      ///token: jwt.createToken(usuario),
+                                      message: "Comercio "+row[0].nombre+" "+row[0].apellido+" logeado"
+      							});
+      						///}else{
+                                  ///res.status(200).send(usuario);
+
+      						///}
+      					///}else{
+      						///res.status(404).send({message : 'El usuario no ha podido loguearse, revisar contraseña.'});
+      					///}
+
+			}
+		else{
+				res.status(404).send({message :'El usuario no esta registrado.'});
+			}
+
+	}
