@@ -7,7 +7,11 @@ exports.addCheckIn=  async (req, res) =>{
   let params = req.body;
   let comercio = params.id_comercio;
   let qrcode = params.qrcode;
-  let fechaHora= new Date();
+
+  let fechaHora= new Date().toLocaleString('es-ES', {
+    timeZone: 'America/Argentina/Buenos_Aires'
+  });
+
 
   //consulta a la base si el qrcode existe en persona, y me trae los datos de la persona
   let row = await pool.query('select * from persona where qrcode = ?', [qrcode]);
