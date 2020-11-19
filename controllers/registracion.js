@@ -8,9 +8,7 @@ exports.addCheckIn=  async (req, res) =>{
   let comercio = params.id_comercio;
   let qrcode = params.qrcode;
 
-  let fechaHora= new Date().toLocaleString( {
-    timeZone: 'America/Argentina/Buenos_Aires'
-  });
+  let fechaHora= new Date();
 
 
   //consulta a la base si el qrcode existe en persona, y me trae los datos de la persona
