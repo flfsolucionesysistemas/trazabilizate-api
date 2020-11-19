@@ -8,7 +8,7 @@ exports.addCheckIn=  async (req, res) =>{
   let comercio = params.id_comercio;
   let qrcode = params.qrcode;
 
-  let fechaHora= new Date().toLocaleString('es-ES', {
+  let fechaHora= new Date().toLocaleString( {
     timeZone: 'America/Argentina/Buenos_Aires'
   });
 
